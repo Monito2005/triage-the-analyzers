@@ -51,6 +51,7 @@ public class ArtifactLink {
 
 
     public ArtifactLink() {
+        // Required by JPA to create entity instances.
     }
 
     public Long getId() {

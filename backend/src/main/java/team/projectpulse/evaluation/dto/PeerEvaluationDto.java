@@ -1,5 +1,9 @@
 package team.projectpulse.evaluation.dto;
 
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,4 +31,9 @@ public record PeerEvaluationDto(Integer evaluationId,
                                 LocalDateTime createdAt,
                                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH:mm:ss")
                                 LocalDateTime updatedAt) {
+    public PeerEvaluationDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        ratings = ratings == null ? null : Collections.unmodifiableList(new ArrayList<>(ratings));
+    }
+
 }

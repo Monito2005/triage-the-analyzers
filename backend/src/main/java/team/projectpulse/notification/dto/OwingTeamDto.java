@@ -1,5 +1,9 @@
 package team.projectpulse.notification.dto;
 
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -8,4 +12,9 @@ import java.util.List;
 public record OwingTeamDto(Integer teamId,
                            String teamName,
                            List<OwingStudentDto> students) {
+    public OwingTeamDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        students = students == null ? null : Collections.unmodifiableList(new ArrayList<>(students));
+    }
+
 }

@@ -1,5 +1,7 @@
 package team.projectpulse.evaluation;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 public class PeerEvaluationAverage {
@@ -17,6 +19,7 @@ public class PeerEvaluationAverage {
 
 
     public PeerEvaluationAverage() {
+        // Explicit no-argument constructor for creating and populating this data object.
     }
 
     public Integer getStudentId() {
@@ -76,27 +79,30 @@ public class PeerEvaluationAverage {
     }
 
     public List<String> getPublicComments() {
-        return publicComments;
+        // Copy present lists while preserving the existing null/unset response value.
+        return java.util.Optional.ofNullable(publicComments).map(ArrayList::new).orElse(null);
     }
 
     public void setPublicComments(List<String> publicComments) {
-        this.publicComments = publicComments;
+        this.publicComments = publicComments == null ? null : new ArrayList<>(publicComments);
     }
 
     public List<String> getPrivateComments() {
-        return privateComments;
+        // Copy present lists while preserving the existing null/unset response value.
+        return java.util.Optional.ofNullable(privateComments).map(ArrayList::new).orElse(null);
     }
 
     public void setPrivateComments(List<String> privateComments) {
-        this.privateComments = privateComments;
+        this.privateComments = privateComments == null ? null : new ArrayList<>(privateComments);
     }
 
     public List<RatingAverage> getRatingAverages() {
-        return ratingAverages;
+        // Copy present lists while preserving the existing null/unset response value.
+        return java.util.Optional.ofNullable(ratingAverages).map(ArrayList::new).orElse(null);
     }
 
     public void setRatingAverages(List<RatingAverage> ratingAverages) {
-        this.ratingAverages = ratingAverages;
+        this.ratingAverages = ratingAverages == null ? null : new ArrayList<>(ratingAverages);
     }
 
 }

@@ -17,6 +17,7 @@ public class Rating {
 
 
     public Rating() {
+        // Required by JPA to create entity instances.
     }
 
     public Rating(Criterion criterion, Double actualScore) {

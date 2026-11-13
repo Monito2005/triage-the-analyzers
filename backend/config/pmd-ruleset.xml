@@ -13,5 +13,11 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD quickstart, with Project Pulse's decisions.</description>
     <rule ref="rulesets/java/quickstart.xml">
+        <!-- D2: Keep explicit no-argument constructors so JPA and data-object construction remain
+             visible. Enforce comments explaining empty bodies instead of removing constructors. -->
+        <exclude name="UnnecessaryConstructor"/>
+        <!-- D4: Current calls use SLF4J placeholders and inexpensive getters or collection sizes.
+             Guards add branches without avoiding meaningful work. Revisit if arguments become expensive. -->
+        <exclude name="GuardLogStatement"/>
     </rule>
 </ruleset>

@@ -7,6 +7,7 @@ public class RatingAverage {
 
 
     public RatingAverage() {
+        // Explicit no-argument constructor for creating and populating this data object.
     }
 
     public RatingAverage(Integer criterionId, Double averageScore) {

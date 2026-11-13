@@ -1,5 +1,11 @@
 package team.projectpulse.ram.usecase.dto;
 
+import java.util.LinkedHashSet;
+
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import team.projectpulse.ram.requirement.Priority;
@@ -34,4 +40,12 @@ public record UseCaseDto(
         PeerEvaluationUserDto updatedBy,
         Integer version,
         UseCaseLockDto lock) {
+    public UseCaseDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        mainSteps = mainSteps == null ? null : Collections.unmodifiableList(new ArrayList<>(mainSteps));
+        postconditions = postconditions == null ? null : Collections.unmodifiableSet(new LinkedHashSet<>(postconditions));
+        preconditions = preconditions == null ? null : Collections.unmodifiableSet(new LinkedHashSet<>(preconditions));
+        secondaryActorIds = secondaryActorIds == null ? null : Collections.unmodifiableSet(new LinkedHashSet<>(secondaryActorIds));
+    }
+
 }

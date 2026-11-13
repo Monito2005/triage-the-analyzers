@@ -36,6 +36,7 @@ public class Comment {
 
 
     public Comment() {
+        // Required by JPA to create entity instances.
     }
 
     public Long getId() {

@@ -74,6 +74,7 @@ public class UseCase {
 
 
     public UseCase() {
+        // Required by JPA to create entity instances.
     }
 
     /* ---------- Convenience helpers ---------- */

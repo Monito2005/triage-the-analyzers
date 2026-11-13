@@ -1,5 +1,9 @@
 package team.projectpulse.ram.document.dto;
 
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 import jakarta.validation.constraints.NotNull;
 import team.projectpulse.ram.document.DocumentStatus;
 import team.projectpulse.ram.document.DocumentType;
@@ -16,4 +20,9 @@ public record RequirementDocumentDto(Long id,
                                      List<DocumentSectionDto> sections,
                                      DocumentStatus status,
                                      Integer version) {
+    public RequirementDocumentDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        sections = sections == null ? null : Collections.unmodifiableList(new ArrayList<>(sections));
+    }
+
 }
