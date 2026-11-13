@@ -16,6 +16,7 @@ public class Result {
 
 
     public Result() {
+        // Explicit no-argument constructor for creating and populating this data object.
     }
 
     public Result(boolean flag, Integer code, String message) {

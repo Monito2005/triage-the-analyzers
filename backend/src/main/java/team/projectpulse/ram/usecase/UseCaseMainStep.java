@@ -29,7 +29,7 @@ public class UseCaseMainStep {
 
     
     public UseCaseMainStep() {
-
+        // Required by JPA to create entity instances.
     }
 
     public UseCaseMainStep(Long id, String actor, String actionText) {

@@ -60,6 +60,7 @@ public class CommentThread {
 
 
     public CommentThread() {
+        // Required by JPA to create entity instances.
     }
 
     public void addComment(Comment comment) {

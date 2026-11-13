@@ -19,11 +19,12 @@ public class DocumentTemplate {
     }
 
     public List<SectionTemplate> getSections() {
-        return sections;
+        // Copy present lists while preserving the existing null/unset response value.
+        return java.util.Optional.ofNullable(sections).map(ArrayList::new).orElse(null);
     }
 
     public void setSections(List<SectionTemplate> sections) {
-        this.sections = sections;
+        this.sections = sections == null ? null : new ArrayList<>(sections);
     }
 
     public static class SectionTemplate {

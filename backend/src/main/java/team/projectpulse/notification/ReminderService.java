@@ -1,5 +1,7 @@
 package team.projectpulse.notification;
 
+import java.util.Collections;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -118,6 +120,10 @@ public class ReminderService {
      * @param failed the students it did not, in the order they were tried
      */
     public record ReminderResult(int sent, List<Student> failed) {
+        public ReminderResult {
+            // Result collections are snapshots; preserve null for existing callers.
+            failed = failed == null ? null : Collections.unmodifiableList(new ArrayList<>(failed));
+        }
     }
 
 }

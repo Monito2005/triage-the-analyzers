@@ -1,5 +1,9 @@
 package team.projectpulse.notification.dto;
 
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import team.projectpulse.notification.SubmittableItem;
 
@@ -24,4 +28,9 @@ public record SubmissionStatusDto(SubmittableItem item,
                                   @JsonFormat(pattern = "HH:mm")
                                   LocalTime dueTime,
                                   List<OwingTeamDto> teams) {
+    public SubmissionStatusDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        teams = teams == null ? null : Collections.unmodifiableList(new ArrayList<>(teams));
+    }
+
 }

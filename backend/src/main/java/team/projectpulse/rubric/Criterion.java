@@ -22,6 +22,7 @@ public class Criterion {
 
 
     public Criterion() {
+        // Required by JPA to create entity instances.
     }
 
     public Criterion(String criterion, String description, Double maxScore) {

@@ -1,5 +1,9 @@
 package team.projectpulse.section.dto;
 
+import java.util.Collections;
+
+import java.util.ArrayList;
+
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,4 +33,9 @@ public record SectionDto(Integer sectionId,
                          DayOfWeek peerEvaluationWeeklyDueDay,
                          @NotEmpty(message = "Peer evaluation due time is required.")
                          String peerEvaluationDueTime) {
+    public SectionDto {
+        // DTO collections are snapshots; preserve null for existing validation behavior.
+        activeWeeks = activeWeeks == null ? null : Collections.unmodifiableList(new ArrayList<>(activeWeeks));
+    }
+
 }

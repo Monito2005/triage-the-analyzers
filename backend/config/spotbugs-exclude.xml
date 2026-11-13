@@ -1,10 +1,305 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SpotBugs project decisions: a rule, or a rule in part of the code, that the team has decided not
-     to enforce. One Match per decision, with a comment giving the reason, for example:
-
-       <!- - JPA entities share associations by design (reason ...) - ->
-       <Match><Package name="~team\.projectpulse\..*"/><Bug pattern="EI_EXPOSE_REP"/></Match>
-
-     Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+    <!-- D1: Only named fields with intentional shared identity are excluded.
+         DTO, template and other collection boundaries remain checked. -->
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.activity.Activity"/>
+        <Field name="~(student|team)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.activity.ActivityController"/>
+        <Field name="activityService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.course.Course"/>
+        <Field name="~(courseAdmin|criteria|instructors|rubrics|sections)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.course.CourseController"/>
+        <Field name="courseService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.evaluation.EvaluationController"/>
+        <Field name="evaluationService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.evaluation.PeerEvaluation"/>
+        <Field name="~(evaluatee|evaluator|ratings)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.evaluation.Rating"/>
+        <Field name="~(criterion|peerEvaluation)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- EvaluationService builds this mutable report through getPeerEvaluationAverages().add(...); a copy would discard those additions. -->
+    <Match>
+        <Class name="team.projectpulse.evaluation.WeeklyPeerEvaluationReport"/>
+        <Field name="peerEvaluationAverages"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.instructor.Instructor"/>
+        <Field name="~(courses|defaultCourse|defaultSection|sections|teams)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.instructor.InstructorController"/>
+        <Field name="instructorService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.instructor.InstructorService"/>
+        <Field name="userInvitationService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.notification.ReminderController"/>
+        <Field name="sectionService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.notification.SubmissionStatusService"/>
+        <Field name="~(activityService|evaluationService)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.notification.WeeklyReminderScheduler"/>
+        <Field name="sectionService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.collaboration.Comment"/>
+        <Field name="~(author|commentThread)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.collaboration.CommentController"/>
+        <Field name="commentService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.collaboration.CommentThread"/>
+        <Field name="~(artifact|comments|createdBy|document|documentSection|team|updatedBy)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.document.DocumentSection"/>
+        <Field name="~(commentThreads|createdBy|document|lock|requirementArtifacts|updatedBy)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.document.DocumentSectionLock"/>
+        <Field name="~(documentSection|lockedBy)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.document.DocumentSectionService"/>
+        <Field name="requirementArtifactService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.document.RequirementDocument"/>
+        <Field name="~(commentThreads|sections|team)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.glossary.GlossaryService"/>
+        <Field name="requirementArtifactService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.requirement.ArtifactKeySequence"/>
+        <Field name="team"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.requirement.ArtifactLink"/>
+        <Field name="~(createdBy|sourceArtifact|targetArtifact|team|updatedBy)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.requirement.ArtifactLinkController"/>
+        <Field name="artifactLinkService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifact"/>
+        <Field name="~(commentThreads|createdBy|incomingArtifactLinks|outgoingArtifactLinks|sourceDocumentSection|team|updatedBy)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifactController"/>
+        <Field name="requirementArtifactService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCase"/>
+        <Field name="~(artifact|lock|mainSteps|postconditions|preconditions|primaryActor|secondaryActors)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCaseExtension"/>
+        <Field name="~(baseStep|steps)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCaseExtensionStep"/>
+        <Field name="extension"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCaseLock"/>
+        <Field name="~(lockedBy|useCase)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCaseMainStep"/>
+        <Field name="~(extensions|useCase)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.ram.usecase.UseCaseService"/>
+        <Field name="requirementArtifactService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.rubric.Criterion"/>
+        <Field name="course"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.rubric.CriterionController"/>
+        <Field name="criterionService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.rubric.Rubric"/>
+        <Field name="~(course|criteria)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.rubric.RubricController"/>
+        <Field name="rubricService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.section.Section"/>
+        <Field name="~(activeWeeks|course|instructors|rubric|students|teams)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.section.SectionController"/>
+        <Field name="~(sectionService|userInvitationService)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.section.SectionService"/>
+        <Field name="userInvitationService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.seed.DataInitializer"/>
+        <Field name="requirementArtifactService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.student.Student"/>
+        <Field name="~(section|team)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.student.StudentController"/>
+        <Field name="studentService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.student.StudentService"/>
+        <Field name="userInvitationService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- JPA manages these shared entity associations and collections; callers maintain bidirectional links through them. -->
+    <Match>
+        <Class name="team.projectpulse.team.Team"/>
+        <Field name="~(instructor|section|students)"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.team.TeamController"/>
+        <Field name="teamService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- The security principal delegates to the authenticated user entity, including its enabled state and roles. -->
+    <Match>
+        <Class name="team.projectpulse.user.MyUserPrincipal"/>
+        <Field name="peerEvaluationUser"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.user.UserController"/>
+        <Field name="resetPasswordService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.user.UserService"/>
+        <Field name="resetPasswordService"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+    <!-- Constructor-injected Spring collaborators are shared beans; copying them would break dependency injection identity. -->
+    <Match>
+        <Class name="team.projectpulse.user.resetpassword.ResetPasswordService"/>
+        <Field name="resetPasswordTokenRepository"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
 </FindBugsFilter>

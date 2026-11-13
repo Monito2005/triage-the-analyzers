@@ -11,6 +11,7 @@ public class WeeklyPeerEvaluationReport {
 
 
     public WeeklyPeerEvaluationReport() {
+        // Explicit no-argument constructor for creating and populating this data object.
     }
 
     public String getSectionName() {
